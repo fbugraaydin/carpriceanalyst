@@ -5,7 +5,7 @@
     <div class="col-md-8 offset-md-2" style="margin-top:100px;">
         <div class="card text-center">
             <div class="card-header" style="background: white">
-                <h1>{{ message }}</h1>
+                <h1>Welcome for Car Analysis</h1>
                 <div class="text-center">
                   <img src="https://www.autovisual.com/img/cote-8.png" class="rounded" style="height: 130px;">
                 </div>
@@ -18,6 +18,9 @@
                         {{ form.link }}
                     </div>
                     <button type="submit" class="btn btn-primary">Find Average Price</button>
+
+                     <h5 class="card-title" style="margin: 12px; color: red;">{{ average_amount }}</h5>
+
                 </form>
             </div>
             <div class="card-footer text-muted">

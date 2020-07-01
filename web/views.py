@@ -12,7 +12,10 @@ def index(request):
         form = AdvertForm(request.POST)
         if form.is_valid():
             total_adverts = get_adverts_by_url(form.cleaned_data['link'])
+            total_amount = calculate_total_amount(total_adverts)
+            average_amount = "{:,.3f} TL".format(float(total_amount/len(total_adverts)))
             return render(request, 'index.html',
-                          {'message': '{total_amount}'.format(calculate_total_amount(total_adverts)), "form": form})
+                          {'average_amount': 'Average Price is {average_amount} '.format(average_amount=average_amount),
+                           "form": form})
 
     return render(request, 'index.html', {'message': 'Welcome for Car Analysis', "form": form})
