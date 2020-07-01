@@ -1,12 +1,12 @@
 from selenium import webdriver
 import time
 from bs4 import BeautifulSoup
-from page import Page
-from advert import Advert
+from .page import Page
+from .advert import Advert
+from .util import extract_amount
 
-chrome_driver_abs_path = '/Users/fuatbugra/PycharmProjects/fromowner/driver/chromedriver'
+chrome_driver_abs_path = 'C:\Users\Bugra\PycharmProjects\fromowneranalyst\driver\chromedriver.exe'
 firefox_driver_abs_path = '/Users/fuatbugra/PycharmProjects/fromowner/driver/geckodriver'
-advert_url = 'https://www.sahibinden.com/volkswagen-golf-1.4-tsi-comfortline'
 base_url = 'https://sahibinden.com'
 
 
@@ -53,22 +53,26 @@ def get_advert_list(advert_page):
     return get_adverts(cur_page)
 
 
-main_page_source = get_page_resource(advert_url)
-page_list = get_page_list(main_page_source)
+def get_adverts_by_url(advert_url):
+    main_page_source = get_page_resource(advert_url)
+    page_list = get_page_list(main_page_source)
 
-lastPage = page_list.__getitem__(len(page_list) - 2)
-print("Page count is : {last_page_index}".format(last_page_index=lastPage.index))
+    last_page = page_list.__getitem__(len(page_list) - 2)
+    print("Page count is : {last_page_index}".format(last_page_index=last_page.index))
 
-all_adverts = []
-count = 0
-for page in page_list:
-    if count > 2:
-        break
-    all_adverts.extend(get_advert_list(base_url + page.link))
-    count += 1
+    all_adverts = []
+    count = 0
+    for page in page_list:
+        if count > 1:
+            break
+        all_adverts.extend(get_advert_list(base_url + page.link))
+        count += 1
+
+    return all_adverts
 
 
-for cur_advert in all_adverts:
-    print(cur_advert)
-
-print("All is well")
+def calculate_total_amount(adverts):
+    total_amount = 0
+    for advert in adverts:
+        total_amount += extract_amount(advert.price)
+    return total_amount

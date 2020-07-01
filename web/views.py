@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render
 from .forms import AdvertForm
+from .fromowner import get_adverts_by_url,calculate_total_amount
 
 
 def index(request):
@@ -10,6 +11,8 @@ def index(request):
     if request.method == 'POST':
         form = AdvertForm(request.POST)
         if form.is_valid():
-            return render(request, 'index.html', {'message': '{link}'.format(link=form.cleaned_data['link']), "form": form})
+            total_adverts = get_adverts_by_url(form.cleaned_data['link'])
+            return render(request, 'index.html',
+                          {'message': '{total_amount}'.format(calculate_total_amount(total_adverts)), "form": form})
 
     return render(request, 'index.html', {'message': 'Welcome for Car Analysis', "form": form})
