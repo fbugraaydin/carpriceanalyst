@@ -64,11 +64,12 @@ def get_adverts_by_url(advert_url, page_count):
         return all_adverts
 
     page_list = get_page_list(main_page_source)
-
+    count = 1
     for page in page_list:
-        if page_count == len(all_adverts):
+        if page_count == count:
             break
         all_adverts.extend(get_advert_list(base_url + page.link))
+        count += 1
 
     return all_adverts
 

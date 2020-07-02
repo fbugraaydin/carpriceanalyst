@@ -24,7 +24,7 @@
                     <button type="submit" class="btn btn-primary" style="margin:20px; width:250px;">Find Average Price</button>
 
                     <h5 class="card-title" style="margin: 12px; color: red;">{{ average_amount }}</h5>
-                    <canvas id="myChart" width="200px" height="200px"></canvas>
+                    <canvas id="myChart" style="width=200px; height=200px;"></canvas>
                 </form>
             </div>
             <div class="card-footer text-muted">
@@ -40,7 +40,7 @@
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['today', 'tomorrow'],
+                labels: {{ labels|safe }},
                 datasets: [{
                     label: '# of Prices',
                     data: {{ data|safe }},
