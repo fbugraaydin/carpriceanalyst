@@ -23,8 +23,8 @@
                     </div>
                     <button type="submit" class="btn btn-primary" style="margin:20px; width:250px;">Find Average Price</button>
 
-                     <h5 class="card-title" style="margin: 12px; color: red;">{{ average_amount }}</h5>
-
+                    <h5 class="card-title" style="margin: 12px; color: red;">{{ average_amount }}</h5>
+                    <canvas id="myChart" width="200px" height="200px"></canvas>
                 </form>
             </div>
             <div class="card-footer text-muted">
@@ -32,5 +32,25 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <script>
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['today', 'tomorrow'],
+                datasets: [{
+                    label: '# of Prices',
+                    data: {{ data|safe }},
+                    borderWidth: 1
+                }]
+            },
+            options: {
+
+            }
+        });
+    </script>
 
 {% endblock %}
