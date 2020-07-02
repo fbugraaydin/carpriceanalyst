@@ -5,7 +5,7 @@ from .page import Page
 from .advert import Advert
 from .util import extract_amount
 
-chrome_driver_abs_path = 'C:\Users\Bugra\PycharmProjects\fromowneranalyst\driver\chromedriver.exe'
+chrome_driver_abs_path = 'C:\\Users\\Bugra\\PycharmProjects\\fromowneranalyst\\driver\\chromedriver.exe'
 firefox_driver_abs_path = '/Users/fuatbugra/PycharmProjects/fromowner/driver/geckodriver'
 base_url = 'https://sahibinden.com'
 
@@ -53,20 +53,22 @@ def get_advert_list(advert_page):
     return get_adverts(cur_page)
 
 
-def get_adverts_by_url(advert_url):
+def get_adverts_by_url(advert_url, page_count):
     main_page_source = get_page_resource(advert_url)
+
+    # last_page = page_list.__getitem__(len(page_list) - 2)
+    # print("Page count is : {last_page_index}".format(last_page_index=last_page.index))
+
+    all_adverts = get_adverts(main_page_source)
+    if page_count == 1:
+        return all_adverts
+
     page_list = get_page_list(main_page_source)
 
-    last_page = page_list.__getitem__(len(page_list) - 2)
-    print("Page count is : {last_page_index}".format(last_page_index=last_page.index))
-
-    all_adverts = []
-    count = 0
     for page in page_list:
-        if count > 1:
+        if page_count == len(all_adverts):
             break
         all_adverts.extend(get_advert_list(base_url + page.link))
-        count += 1
 
     return all_adverts
 
