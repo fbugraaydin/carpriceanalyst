@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import AdvertForm
-from .fromowner import get_adverts_by_url, calculate_total_amount
+from .analyzer import get_adverts_by_url, calculate_total_amount
 from .util import *
 from datetime import date, timedelta
 from .models import *
@@ -29,7 +29,7 @@ def index(request):
             total_amount = calculate_total_amount(total_adverts)
             average_amount = float(total_amount / len(total_adverts))
             format_average_amount = "{:,.3f} TL".format(average_amount)
-            today = date.today() + timedelta(days=3)
+            today = date.today()
 
             link = Link.objects.filter(link=input_link)
             if link is None or len(link) == 0:

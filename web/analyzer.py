@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 from .page import Page
 from .advert import Advert
 from .util import extract_amount
+import os
 
-chrome_driver_abs_path = 'C:\\Users\\Bugra\\PycharmProjects\\fromowneranalyst\\driver\\chromedriver.exe'
-firefox_driver_abs_path = '/Users/fuatbugra/PycharmProjects/fromowner/driver/geckodriver'
+chrome_driver_abs_path = os.path.realpath('driver/chromedriver')
+firefox_driver_abs_path = os.path.realpath('driver/geckodriver')
 base_url = 'https://sahibinden.com'
 
 
