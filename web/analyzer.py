@@ -5,22 +5,36 @@ from .page import Page
 from .advert import Advert
 from .util import extract_amount
 import os
+import logging
+import traceback
 
 chrome_driver_abs_path = os.path.realpath('driver/chromedriver')
 firefox_driver_abs_path = os.path.realpath('driver/geckodriver')
 base_url = 'https://sahibinden.com'
 
+logger = logging.getLogger(__name__)
 
-def get_page_resource(url):
-    browser = webdriver.Chrome(executable_path=chrome_driver_abs_path)
-    browser.get(url)
-    html = browser.page_source
-    time.sleep(2)
-    browser.close()
+
+def get_page_source(url):
+    logger.info('Getting page source from :' + url)
+    try:
+        browser = webdriver.Chrome(executable_path=chrome_driver_abs_path)
+        browser.get(url)
+        html = browser.page_source
+        time.sleep(2)
+        browser.close()
+        logger.info('Gor page source : ' + url)
+    except Exception as e:
+        logger.error(e)
+        trace_back = traceback.format_exc()
+        message = str(e) + " " + str(trace_back)
+        print(message)
+
     return html
 
 
 def get_page_list(html_source):
+    logger.info('Parsing page list from main page source')
     soup = BeautifulSoup(html_source, 'html.parser')
     nav_items = soup.find("ul", {"class": "pageNaviButtons"}).find_all("li")
     parsed_pages = []
@@ -29,10 +43,12 @@ def get_page_list(html_source):
             index = item.find("a").text
             link = "" if item.find("a")['href'] is None else item.find("a")['href']
             parsed_pages.append(Page(index, link))
+    logger.info('Parsed page list from html source')
     return parsed_pages
 
 
 def get_adverts(html_source):
+    logger.info('Parsing adverts from advert page source')
     soup = BeautifulSoup(html_source, 'html.parser')
     adverts = soup.find_all("tr", {"class": "searchResultsItem"})
 
@@ -45,20 +61,17 @@ def get_adverts(html_source):
             price = advert_columns[6].text.strip()
             address = advert_columns[8].text.strip()
             parsed_adverts.append(Advert(year, km, price, address))
-
+    logger.info('Parsed adverts from advert page source')
     return parsed_adverts
 
 
 def get_advert_list(advert_page):
-    cur_page = get_page_resource(advert_page)
+    cur_page = get_page_source(advert_page)
     return get_adverts(cur_page)
 
 
 def get_adverts_by_url(advert_url, page_count):
-    main_page_source = get_page_resource(advert_url)
-
-    # last_page = page_list.__getitem__(len(page_list) - 2)
-    # print("Page count is : {last_page_index}".format(last_page_index=last_page.index))
+    main_page_source = get_page_source(advert_url)
 
     all_adverts = get_adverts(main_page_source)
     if page_count == 1:

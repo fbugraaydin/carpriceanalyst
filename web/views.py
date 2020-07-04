@@ -5,6 +5,9 @@ from .util import *
 from datetime import date, timedelta
 from .models import *
 from django.http import JsonResponse
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def index(request):
@@ -24,6 +27,8 @@ def index(request):
         elif request.POST.get('link') is not None and request.POST.get('page_choice') is not None:
             input_link = request.POST['link']
             input_page_choice = int(request.POST['page_choice'])
+
+            logger.info('Link : {link}, page_choice: {page_choice}'.format(link=input_link, page_choice=input_page_choice))
 
             total_adverts = get_adverts_by_url(input_link, input_page_choice)
             total_amount = calculate_total_amount(total_adverts)
