@@ -29,14 +29,12 @@ def get_page_source(url):
         browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
         browser.get(url)
-        body = browser.get('body')
-        print("Body => " + body)
-        # html = browser.page_source
+        html = browser.page_source
         time.sleep(2)
         browser.quit()
         logger.info('Got page source : ' + url)
-        # logger.info('Htmlll => ' + html)
-        return body
+        logger.info('Htmlll => ' + html)
+        return html
     except Exception as e:
         logger.error(e)
         trace_back = traceback.format_exc()
