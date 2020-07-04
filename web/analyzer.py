@@ -33,7 +33,6 @@ def get_page_source(url):
         browser.quit()
         logger.info('Got page source : ' + url)
         logger.info('Htmlll => ' + html)
-        logger.info('Length => ' + len(html))
         return html
     except Exception as e:
         logger.error(e)
