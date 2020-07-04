@@ -35,8 +35,8 @@ def index(request):
             total_adverts = get_adverts_by_url(input_link, input_page_choice)
             total_amount = calculate_total_amount(total_adverts)
 
-            logger.info('total_amount : {total_amount} , total_adverts : {total_adverts}', total_amount=total_amount,
-                        total_adverts=total_adverts)
+            logger.info('total_amount : {total_amount} , total_adverts : {total_adverts}'.format(total_amount=total_amount,
+                        total_adverts=total_adverts))
             average_amount = float(total_amount / len(total_adverts))
             format_average_amount = "{:,.3f} TL".format(average_amount)
             today = date.today()
