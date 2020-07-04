@@ -12,8 +12,9 @@ chrome_driver_abs_path = os.path.realpath('driver/chromedriver')
 firefox_driver_abs_path = os.path.realpath('driver/geckodriver')
 base_url = 'https://sahibinden.com'
 
-logging.getLogger().setLevel(logging.INFO)
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger()
+logger.addHandler(logging.StreamHandler())
 
 
 def get_page_source(url):
@@ -31,7 +32,7 @@ def get_page_source(url):
         html = browser.page_source
         time.sleep(2)
         browser.quit()
-        logger.info('Gor page source : ' + url)
+        logger.info('Got page source : ' + url)
         return html
     except Exception as e:
         logger.error(e)
