@@ -12,6 +12,7 @@ chrome_driver_abs_path = os.path.realpath('driver/chromedriver')
 firefox_driver_abs_path = os.path.realpath('driver/geckodriver')
 base_url = 'https://sahibinden.com'
 
+logging.getLogger().setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
 
 
