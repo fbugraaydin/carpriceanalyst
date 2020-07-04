@@ -32,6 +32,8 @@ def get_page_source(url):
         time.sleep(2)
         browser.quit()
         logger.info('Got page source : ' + url)
+        logger.info('Htmlll => ' + html)
+        logger.info('Length => ' + len(html))
         return html
     except Exception as e:
         logger.error(e)
@@ -55,7 +57,6 @@ def get_page_list(html_source):
 
 
 def get_adverts(html_source):
-    logger.info('Parsing adverts from advert page source => ' + html_source)
     soup = BeautifulSoup(html_source, 'html.parser')
     adverts = soup.find_all("tr", {"class": "searchResultsItem"})
 
