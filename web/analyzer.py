@@ -10,7 +10,7 @@ import traceback
 
 base_url = 'https://sahibinden.com'
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(filename='app.log', level=logging.DEBUG)
 logger = logging.getLogger()
 logger.addHandler(logging.StreamHandler())
 
@@ -31,11 +31,11 @@ def get_page_source(url):
         browser.get(url)
         body = browser.get('body')
         print("Body => " + body)
-        #html = browser.page_source
+        # html = browser.page_source
         time.sleep(2)
         browser.quit()
         logger.info('Got page source : ' + url)
-        #logger.info('Htmlll => ' + html)
+        # logger.info('Htmlll => ' + html)
         return body
     except Exception as e:
         logger.error(e)
