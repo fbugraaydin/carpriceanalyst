@@ -2,55 +2,167 @@
 {% load static %}
 {% block page_content %}
 
-    <div class="col-md-8 offset-md-2" style="margin-top:100px;">
+    <div class="col-md-8 offset-md-2" style="margin-top:50px; margin-bottom: 50px;">
         <div class="card text-center">
             <div class="card-header" style="background: white">
-                <h1>Welcome Your Car Analyst</h1>
+                <h1>Welcome Your Car Price Analyst</h1>
                 <div class="text-center">
-                  <img src="https://www.autovisual.com/img/cote-8.png" class="rounded" style="height: 130px;">
+                    <img src="https://www.autovisual.com/img/cote-8.png" class="rounded"
+                         style="height: 140px;margin: 15px;">
                 </div>
             </div>
             <div class="card-body">
-                <h5 class="card-title">Please paste your car search link as your criteria and watch it :)</h5>
-                <form action="/execute/" method="post">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {{ form.link }}
-                    </div>
-                    {{ form.page_choice.label}}
-                    <div class="form-group" style="margin:10px;">
-                        {{ form.page_choice }}
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="margin:20px; width:250px;">Find Average Price</button>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation" style="width:50%">
+                        <a class="nav-link active" id="analyze-car-tab" data-toggle="tab" href="#analyze-car" role="tab"
+                           aria-controls="analyze-car" aria-selected="true">Analyze</a>
+                    </li>
+                    <li class="nav-item" role="presentation" style="width:50%">
+                        <a class="nav-link" id="select-analyze-tab" data-toggle="tab" href="#select-analyze" role="tab"
+                           aria-controls="select-analyze" aria-selected="false">History</a>
+                    </li>
+                </ul>
 
-                    <h5 class="card-title" style="margin: 12px; color: red;">{{ average_amount }}</h5>
-                    <canvas id="myChart" style="width=200px; height=200px;"></canvas>
-                </form>
+                <div class="tab-content" id="myTabContent" style="padding: 50px;">
+                    <div class="tab-pane fade show active" id="analyze-car" role="tabpanel"
+                         aria-labelledby="analyze-car-tab">
+                        <h5 class="card-title">Please paste your car search link as your criteria and watch it :)</h5>
+                        <form id="analyze-form" action="/execute/" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.link }}
+                            </div>
+                            {{ form.page_choice.label }}
+                            <div class="form-group" style="margin:10px;">
+                                {{ form.page_choice }}
+                            </div>
+                            <input type="submit" value="Find Average Price" class="btn btn-primary"
+                                   style="margin:20px; width:250px;"/>
+                            <h5 id="average-price-text" class="card-title" style="margin: 12px; color: red;"></h5>
+                        </form>
+                        <canvas id="analyzeChart"></canvas>
+                    </div>
+                    <div class="tab-pane fade" id="select-analyze" role="tabpanel" aria-labelledby="select-analyze-tab"
+                         style="padding: 40px;">
+                        <form id="history-form" method='post' action='/show-history/'>
+                            {% csrf_token %}
+                            <select class="custom-select" name="selected_url">
+                                <option selected>Please select link to show its history</option>
+                                {% for url in url_list %}
+                                    <option value='{{ url }}'>{{ url }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="submit" value="Show History" class="btn btn-success"
+                                   style="margin:20px; width:250px;"/>
+                        </form>
+                        <canvas id="historyChart"></canvas>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-muted">
                 Thanks for FromOwnerDotCom.
+            </div>
+        </div>
+
+        <div id="loading-bar" class="loading">
+            <div class="loader">
+                <div style="margin: 5px;">
+                    <div class="spinner-grow text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-secondary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-success" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
-    <script>
-        var ctx = document.getElementById('myChart');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: {{ labels|safe }},
-                datasets: [{
-                    label: '# of Prices',
-                    data: {{ data|safe }},
-                    borderWidth: 1
-                }]
-            },
-            options: {
+    <script type="text/javascript">
+        var loadingBar = $('#loading-bar');
 
+        loadingBar.hide();
+        var createChart = function (chartId, data, labels) {
+            if (data != null && labels != null) {
+                var ctx = document.getElementById(chartId);
+                var historyChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'The Price of your Car day by day',
+                            data: data,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {}
+                });
             }
+        }
+
+        $("#analyze-form").on('submit', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            loadingBar.show();
+            $.ajax({
+                type: "POST",
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function (response) {
+                    loadingBar.hide();
+                    $("#average-price-text").text(response.average_amount)
+                    createChart("analyzeChart", response.data, response.labels)
+                },
+                error: function (error) {
+                    loadingBar.hide();
+                    console.log("Getting history data error")
+                }
+            });
         });
+
+        $("#history-form").on('submit', function (e) {
+            e.preventDefault();
+            var form = $(this);
+            loadingBar.show();
+            $.ajax({
+                type: "POST",
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function (response) {
+                    loadingBar.hide();
+                    createChart("historyChart", response.data, response.labels)
+                },
+                error: function (error) {
+                    loadingBar.hide();
+                    console.log("Getting history data error")
+                }
+            });
+        });
+
     </script>
+
+    <style>
+
+        .loading {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: #fff0;
+            z-index:0;
+        }
+
+        .loader {
+            text-align: center;
+            margin-top:42%;
+            margin-left :0%;
+        }
+    </style>
 
 {% endblock %}

@@ -27,3 +27,12 @@ class AdvertForm(forms.Form):
             "aria-expanded": "false",
             "data-offset": "10,20"
         }, choices=PAGE_CHOICES))
+
+    url_list = forms.CharField(
+        widget=forms.Select(attrs={
+            "class": "btn btn-warning dropdown-toggle",
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false",
+            "data-offset": "10,20"
+        }))
