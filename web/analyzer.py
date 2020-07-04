@@ -56,11 +56,9 @@ def get_page_list(html_source):
 
 
 def get_adverts(html_source):
-    logger.info('Parsing adverts from advert page source')
+    logger.info('Parsing adverts from advert page source => ' + html_source)
     soup = BeautifulSoup(html_source, 'html.parser')
     adverts = soup.find_all("tr", {"class": "searchResultsItem"})
-
-    print("Adverts ===> " + adverts)
 
     parsed_adverts = []
     for advert in adverts:
