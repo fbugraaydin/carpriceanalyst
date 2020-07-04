@@ -24,7 +24,7 @@ SECRET_KEY = 'f^w_7qyzx1vk5o=6pv4=m2iprqcrhsvk!q9mudcp6&kfrkfb#s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'car-price-analyst.com', 'car-price-analyst.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['car-price-analyst.com', 'car-price-analyst.herokuapp.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -119,4 +119,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 #  Add configuration for static files storage using whitenoise
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
