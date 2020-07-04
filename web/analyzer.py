@@ -18,19 +18,25 @@ logger = logging.getLogger(__name__)
 def get_page_source(url):
     logger.info('Getting page source from :' + url)
     try:
-        browser = webdriver.Chrome(executable_path=chrome_driver_abs_path)
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--window-size=1920,1080")
+
+        browser = webdriver.Chrome(executable_path=chrome_driver_abs_path, chrome_options=chrome_options)
         browser.get(url)
         html = browser.page_source
         time.sleep(2)
-        browser.close()
+        browser.quit()
         logger.info('Gor page source : ' + url)
+        return html
     except Exception as e:
         logger.error(e)
         trace_back = traceback.format_exc()
         message = str(e) + " " + str(trace_back)
         print(message)
-
-    return html
 
 
 def get_page_list(html_source):
