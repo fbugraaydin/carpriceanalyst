@@ -10,6 +10,7 @@ import traceback
 
 base_url = 'https://sahibinden.com'
 
+logging.getLogger().setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
 
 

@@ -7,6 +7,7 @@ from .models import *
 from django.http import JsonResponse
 import logging
 
+logging.getLogger().setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
 
 
