@@ -60,6 +60,8 @@ def get_adverts(html_source):
     soup = BeautifulSoup(html_source, 'html.parser')
     adverts = soup.find_all("tr", {"class": "searchResultsItem"})
 
+    print("Adverts ===> " + adverts)
+
     parsed_adverts = []
     for advert in adverts:
         advert_columns = advert.find_all("td")
@@ -70,6 +72,9 @@ def get_adverts(html_source):
             address = advert_columns[8].text.strip()
             parsed_adverts.append(Advert(year, km, price, address))
     logger.info('Parsed adverts from advert page source')
+
+    for p in parsed_adverts:
+        print(p)
     return parsed_adverts
 
 
