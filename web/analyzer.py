@@ -7,12 +7,15 @@ from .util import extract_amount
 import os
 import logging
 import traceback
+from fake_useragent import UserAgent
 
 base_url = 'https://sahibinden.com'
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 logger = logging.getLogger()
 logger.addHandler(logging.StreamHandler())
+ua = UserAgent()
+userAgent = ua.random
 
 
 def get_page_source(url):
@@ -25,7 +28,7 @@ def get_page_source(url):
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--window-size=1920,1080")
-        chrome_options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36")
+        chrome_options.add_argument(f'user-agent={userAgent}')
         browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
         browser.get(url)
