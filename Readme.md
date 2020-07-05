@@ -21,4 +21,7 @@ When you enter the Car Price Analyst. You have 2 functionality:
 PEP 8 -- Style Guide for Python Code
 
 ## Licence
+
+This project was developed as a hobby. It has no commercial purpose.
+
 Developed by © [Fuat Buğra AYDIN](https://www.linkedin.com/in/fuatbugraaydin/)
