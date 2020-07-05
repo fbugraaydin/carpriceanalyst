@@ -33,8 +33,12 @@ def get_page_source(url):
         #chrome_options.add_experimental_option('useAutomationExtension', False)
         chrome_options.add_argument("--disable-blink-features")
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_argument('ignore-certificate-errors')
+        capabilities = webdriver.DesiredCapabilities().CHROME
+        capabilities.setCapability("chrome.switches", ["--ignore-certificate-errors"]);
 
-        browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+        browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options,
+                                   capabilities=capabilities)
         #browser.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'})
         # browser.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
         #     "source": """
