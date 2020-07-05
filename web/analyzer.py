@@ -8,7 +8,6 @@ import os
 import logging
 import traceback
 from fake_useragent import UserAgent
-from pyvirtualdisplay import Display
 
 base_url = 'https://sahibinden.com'
 
@@ -22,8 +21,6 @@ userAgent = ua.random
 def get_page_source(url):
     logger.info('Getting page source from :' + url)
     try:
-        display = Display(visible=1, size=(1600, 902))
-        display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
         chrome_options.add_argument('--profile-directory=Default')
