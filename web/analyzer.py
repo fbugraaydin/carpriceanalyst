@@ -8,6 +8,7 @@ import os
 import logging
 import traceback
 from fake_useragent import UserAgent
+from pyvirtualdisplay import Display
 
 base_url = 'https://sahibinden.com'
 
@@ -21,8 +22,14 @@ userAgent = ua.random
 def get_page_source(url):
     logger.info('Getting page source from :' + url)
     try:
+        display = Display(visible=1, size=(1600, 902))
+        display.start()
         chrome_options = webdriver.ChromeOptions()
         chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        chrome_options.add_argument('--profile-directory=Default')
+        chrome_options.add_argument("--incognito")
+        chrome_options.add_argument("--disable-plugins-discovery");
+        chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
@@ -30,6 +37,12 @@ def get_page_source(url):
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument(f'user-agent={userAgent}')
         browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
+        browser.delete_all_cookies()
+
+        browser.set_window_size(800, 800)
+
+        browser.set_window_position(0, 0)
 
         browser.get(url)
         html = browser.page_source
