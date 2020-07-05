@@ -13,20 +13,24 @@
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation" style="width:50%">
+                    <li class="nav-item" role="presentation" style="width:33.3%">
                         <a class="nav-link active" id="analyze-car-tab" data-toggle="tab" href="#analyze-car" role="tab"
                            aria-controls="analyze-car" aria-selected="true">Analyze</a>
                     </li>
-                    <li class="nav-item" role="presentation" style="width:50%">
+                    <li class="nav-item" role="presentation" style="width:33.4%">
                         <a class="nav-link" id="select-analyze-tab" data-toggle="tab" href="#select-analyze" role="tab"
                            aria-controls="select-analyze" aria-selected="false">History</a>
+                    </li>
+                    <li class="nav-item" role="presentation" style="width:33.3%">
+                        <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab"
+                           aria-controls="about" aria-selected="false">About</a>
                     </li>
                 </ul>
 
                 <div class="tab-content" id="myTabContent" style="padding: 50px;">
                     <div class="tab-pane fade show active" id="analyze-car" role="tabpanel"
                          aria-labelledby="analyze-car-tab">
-                        <h5 class="card-title">Please paste your car search link as your criteria and watch it :)</h5>
+                        <h5 class="card-title">Please paste your car search link as your criteria and let me analyze for you!</h5>
                         <form id="analyze-form" action="/execute/" method="post">
                             {% csrf_token %}
                             <div class="form-group">
@@ -57,10 +61,29 @@
                         </form>
                         <canvas id="historyChart"></canvas>
                     </div>
+                    <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab"
+                         style="padding: 40px;">
+                        <div class="">
+                          <div class="">
+                            <p>Car Price Analyst provides you the analysis of the car market according to your criteria.</p>
+                            <p>I developed project because I like and and follow cars.</p>
+                            <p>People says that The most powerful therapy of a man is that browsing on the car selling sites :)</p>
+                            <p>When you enter the Car Price Analyst. You have 2 functionality:</p>
+                            <p><span style="font-weight: bold">Analyze:</span> You enter car search link & select how many pages do you want to analyze.</p>
+                            <p><span style="font-weight: bold">History:</span> Lists search links that analyzed until now. When you select can see its history.</p>
+                            <p>This project was developed as a hobby. It has no commercial purpose.</p>
+                            <p>Project supports MyCarDotCom.</p>
+                            <p>Example input:
+                                <a href="https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi">https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi</a>
+                            </p>
+                            I hope you will have the car that you dreamed :)
+                          </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card-footer text-muted">
-                Thanks for FromOwnerDotCom.
+                Thanks for MyCarDotCom / FromOwnerDotCom.
             </div>
         </div>
 
