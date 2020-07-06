@@ -1,12 +1,9 @@
 from django.shortcuts import render
 from .forms import AdvertForm
-from .analyzer import get_adverts_by_url, calculate_total_amount
 from .util import *
-from datetime import date, timedelta
-from .models import *
 from django.http import JsonResponse
-from .fromownerdotcom import *
-from .mycardotcom import *
+
+from .analyzer import *
 import logging
 
 logging.getLogger().setLevel(logging.INFO)
@@ -20,9 +17,8 @@ def index(request):
 
         if request.POST.get('selected_url') is not None:
             input_link = request.POST['selected_url']
-            average_amount_list = Statistic.objects.filter(
-                link__link=input_link).values_list('average_amount', flat=True)
-            date_list = Statistic.objects.filter(link__link=input_link).values_list('date', flat=True)
+
+            average_amount_list, date_list = flat_values(input_link)
 
             return JsonResponse({"data": list(average_amount_list),
                                  "labels": list(map(lambda d: format_date(d), date_list))}, status=200)
@@ -31,39 +27,23 @@ def index(request):
             input_link = request.POST['link']
             input_page_choice = int(request.POST['page_choice'])
 
-            logger.info(
-                'Link : {link}, page_choice: {page_choice}'.format(link=input_link, page_choice=input_page_choice))
+            average_amount = analyze(input_link, input_page_choice)
+            save(average_amount, input_link)
 
-            parser = MyCarDotCom()
-            total_adverts = get_adverts_by_url(parser, input_link, input_page_choice)
-            total_amount = calculate_total_amount(total_adverts)
+            average_amount_list, date_list = flat_values(input_link)
 
-            logger.info(
-                'total_amount : {total_amount} , total_adverts : {total_adverts}'.format(total_amount=total_amount,
-                                                                                         total_adverts=total_adverts))
-            average_amount = float(total_amount / len(total_adverts))
             format_average_amount = "{:,.3f} TL".format(average_amount)
-            today = date.today()
-
-            link = Link.objects.filter(link=input_link)
-            if link is None or len(link) == 0:
-                link = Link(link=input_link)
-                link = link.save()
-
-            statistic = Statistic.objects.filter(date=today, link__link=input_link)
-            if len(statistic) == 1:
-                statistic.update(average_amount=average_amount)
-            else:
-                statistic = Statistic(date=today, link=link[0], average_amount=average_amount)
-                statistic.save()
-
-            average_amount_list = Statistic.objects.filter(
-                link__link=input_link).values_list('average_amount', flat=True)
-            date_list = Statistic.objects.filter(link__link=input_link).values_list('date', flat=True)
-
             return JsonResponse({'average_amount': 'Average Price is {average_amount} '.format(
                 average_amount=format_average_amount),
                 'data': list(average_amount_list),
                 'labels': list(map(lambda d: format_date(d), date_list))}, status=200)
 
     return render(request, 'index.html', {"form": form, "url_list": url_list})
+
+
+def flat_values(input_link):
+    average_amount_list = Statistic.objects.filter(
+        link__link=input_link).values_list('average_amount', flat=True)
+    date_list = Statistic.objects.filter(link__link=input_link).values_list('date', flat=True)
+    return average_amount_list, date_list
+
