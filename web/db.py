@@ -21,4 +21,4 @@ def get_link(input_link):
 
 
 def get_all_link():
-    return Link.objects.values_list('date', flat=True)
+    return Link.objects.values_list('link', flat=True)

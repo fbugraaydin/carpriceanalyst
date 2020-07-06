@@ -1,10 +1,10 @@
-import schedule
-import time
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 from .db import get_all_link
 from .analyzer import analyze, save
-from .scheduler import schedule_job
+import logging
 
-schedule_job()
+logger = logging.getLogger(__name__)
 
 
 def job():
@@ -15,7 +15,6 @@ def job():
 
 
 def schedule_job():
-    schedule.every(1).minutes.do(job)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    scheduler = BackgroundScheduler(daemon=True)
+    scheduler.add_job(job, CronTrigger(hour=9, minute=5))
+    scheduler.start()
