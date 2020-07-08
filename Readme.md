@@ -16,6 +16,8 @@ When you enter the Car Price Analyst. You have 2 functionality:
 - Analyze: You enter car search link & select how many pages do you want to analyze.
 - History: Lists search links that analyzed until now. When you select can see its history.
 
+Your criteria link that you analyzed runs on every morning. Thus, you can follow changes from past to present day by day.
+
 ## Coding Standards
 
 PEP 8 -- Style Guide for Python Code
