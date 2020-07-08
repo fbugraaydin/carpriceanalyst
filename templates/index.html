@@ -30,6 +30,9 @@
                 <div class="tab-content" id="myTabContent" style="padding: 50px;">
                     <div class="tab-pane fade show active" id="analyze-car" role="tabpanel"
                          aria-labelledby="analyze-car-tab">
+                         <div id="warning-message" class="alert alert-warning" style="display: none" role="alert">
+                            <span>Please enter a valid criteria link.</span>
+                         </div>
                         <h5 class="card-title">Please paste your car search link as your criteria and let me analyze for you!</h5>
                         <form id="analyze-form" action="/execute/" method="post">
                             {% csrf_token %}
@@ -44,7 +47,9 @@
                                    style="margin:20px; width:250px;"/>
                             <h5 id="average-price-text" class="card-title" style="margin: 12px; color: red;"></h5>
                         </form>
-                        <canvas id="analyzeChart"></canvas>
+                        <div id="analyzeChart-container">
+                            <canvas id="analyzeChart"></canvas>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="select-analyze" role="tabpanel" aria-labelledby="select-analyze-tab"
                          style="padding: 40px;">
@@ -59,7 +64,9 @@
                             <input type="submit" value="Show History" class="btn btn-success"
                                    style="margin:20px; width:250px;"/>
                         </form>
-                        <canvas id="historyChart"></canvas>
+                        <div id="historyChart-container">
+                            <canvas id="historyChart"></canvas>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab"
                          style="padding: 40px;">
@@ -71,10 +78,11 @@
                             <p>When you enter the Car Price Analyst. You have 2 functionality:</p>
                             <p><span style="font-weight: bold">Analyze:</span> You enter car search link & select how many pages do you want to analyze.</p>
                             <p><span style="font-weight: bold">History:</span> Lists search links that analyzed until now. When you select can see its history.</p>
+                            <p>Your criteria link that you analyzed runs on every morning. Thus, you can follow changes from past to present day by day.</p>
                             <p>This project was developed as a hobby. It has no commercial purpose.</p>
                             <p>Project supports MyCarDotCom.</p>
                             <p>Example input:
-                                <a href="https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi">https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi</a>
+                                <a target="_blank" href="https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi">https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi</a>
                             </p>
                             I hope you will have the car that you dreamed :)
                           </div>
@@ -112,6 +120,8 @@
         loadingBar.hide();
         var createChart = function (chartId, data, labels) {
             if (data != null && labels != null) {
+                document.getElementById(chartId+"-container").innerHTML = '<canvas id="' +chartId + '"></canvas>';
+
                 var ctx = document.getElementById(chartId);
                 var historyChart = new Chart(ctx, {
                     type: 'line',
@@ -129,6 +139,8 @@
         }
 
         $("#analyze-form").on('submit', function (e) {
+            document.getElementById("analyzeChart-container").innerHTML = '&nbsp;';
+            $("#average-price-text").hide();
             e.preventDefault();
             var form = $(this);
             loadingBar.show();
@@ -138,10 +150,13 @@
                 data: form.serialize(),
                 success: function (response) {
                     loadingBar.hide();
+                    $('#warning-message').hide();
+                    $("#average-price-text").show();
                     $("#average-price-text").text(response.average_amount)
                     createChart("analyzeChart", response.data, response.labels)
                 },
                 error: function (error) {
+                    $('#warning-message').show();
                     loadingBar.hide();
                     console.log("Getting history data error")
                 }
@@ -149,6 +164,7 @@
         });
 
         $("#history-form").on('submit', function (e) {
+            document.getElementById("historyChart-container").innerHTML = '&nbsp;';
             e.preventDefault();
             var form = $(this);
             loadingBar.show();
