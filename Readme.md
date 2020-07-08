@@ -4,11 +4,14 @@ Car Price Analyst provides you the analysis of the car market according to your 
 I developed project because loving and following cars.
 People says that The most powerful therapy of man is that browsing on the car selling sites :)
 
+Just click to look at: http://car-price-analyst.herokuapp.com/
+
 ## Tech / Framework
 - [Python](https://www.python.org/)
 - [Django](https://www.djangoproject.com/)
 - [Selenium](https://selenium-python.readthedocs.io/)
 - [BootStrap](https://getbootstrap.com/)
+- [SQLite](https://www.sqlite.org/index.html)
 
 ## Features
 
