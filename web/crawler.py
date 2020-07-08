@@ -9,7 +9,7 @@ from .mycardotcom import *
 chrome_driver_abs_path = 'C:\\Users\\Bugra\\PycharmProjects\\carpriceanalyst\\driver\\chromedriver.exe'
 firefox_driver_abs_path = os.path.realpath('driver/geckodriver')
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 logger.addHandler(logging.StreamHandler())
 
