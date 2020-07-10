@@ -21,6 +21,18 @@ When you enter the Car Price Analyst. You have 2 functionality:
 
 Your criteria link that you analyzed runs on every morning. Thus, you can follow changes from past to present day by day.
 
+
+## Prerequisites
+
+- Selenium is used to get web page source. **driver** folder includes drivers that used by selenium.
+There are chrome & firefox drivers for mac. You must download as your os.
+
+- Must install required libraries:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Coding Standards
 
 PEP 8 -- Style Guide for Python Code
