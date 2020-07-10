@@ -10,11 +10,11 @@ logger = logging.getLogger(__name__)
 def job():
     links = get_all_link()
     for link in links:
-        average_amount = analyze(link.link, 1)
-        save(average_amount, link.link)
+        average_amount = analyze(link, 1)
+        save(average_amount, link)
 
 
 def schedule_job():
     scheduler = BackgroundScheduler(daemon=True)
-    scheduler.add_job(job, CronTrigger(hour=21, minute=32))
+    scheduler.add_job(job, CronTrigger(hour=21, minute=44))
     scheduler.start()
