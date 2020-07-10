@@ -6,10 +6,6 @@ from django.http import JsonResponse
 from .analyzer import *
 import logging
 
-logging.getLogger().setLevel(logging.INFO)
-logger = logging.getLogger(__name__)
-
-
 def index(request):
     form = AdvertForm()
     url_list = Link.objects.values_list('link', flat=True)

@@ -28,5 +28,5 @@ def analyze_page(input_link, input_page_choice):
     total_amount = calculate_total_amount(total_adverts)
     logger.info(
         'total_amount : {total_amount} , total_adverts : {total_adverts}'.format(total_amount=total_amount,
-                                                                                 total_adverts=total_adverts))
+                                                                                 total_adverts=len(total_adverts)))
     return total_adverts, total_amount
