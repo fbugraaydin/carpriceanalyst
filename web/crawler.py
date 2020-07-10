@@ -6,6 +6,9 @@ import traceback
 from .fromownerdotcom import *
 from .mycardotcom import *
 
+chrome_driver_abs_path = os.path.realpath('driver/chromedriver')
+firefox_driver_abs_path = os.path.realpath('driver/geckodriver')
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 logger.addHandler(logging.StreamHandler())
