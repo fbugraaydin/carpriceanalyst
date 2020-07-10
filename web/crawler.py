@@ -6,7 +6,7 @@ import traceback
 from .fromownerdotcom import *
 from .mycardotcom import *
 
-chrome_driver_abs_path = 'C:\\Users\\Bugra\\PycharmProjects\\carpriceanalyst\\driver\\chromedriver.exe'
+chrome_driver_abs_path = os.path.realpath('driver/chromedriver')
 firefox_driver_abs_path = os.path.realpath('driver/geckodriver')
 
 logging.basicConfig(level=logging.INFO)
