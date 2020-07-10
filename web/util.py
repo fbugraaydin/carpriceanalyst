@@ -3,7 +3,7 @@ def extract_amount(amount):
 
 
 def format_date(date):
-    return date.strftime("%d/%m/%Y")
+    return date.strftime("%d/%m")
 
 
 def format_time(time):
