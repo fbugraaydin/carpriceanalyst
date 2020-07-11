@@ -16,5 +16,5 @@ def job():
 
 def schedule_job():
     scheduler = BackgroundScheduler(daemon=True)
-    scheduler.add_job(job, CronTrigger(hour=9))
+    scheduler.add_job(job, CronTrigger(hour=17, day='*', min=20))
     scheduler.start()
