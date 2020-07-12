@@ -10,8 +10,11 @@ logger = logging.getLogger(__name__)
 def job():
     links = get_all_link()
     for link in links:
-        average_amount = analyze(link, 1)
-        save(average_amount, link)
+        try:
+            average_amount = analyze(link, 1)
+            save(average_amount, link)
+        except Exception as e:
+            logger.error(e)
 
 
 def schedule_job():
