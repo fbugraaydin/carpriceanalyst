@@ -4,7 +4,7 @@ from .util import *
 from django.http import JsonResponse
 
 from .analyzer import *
-import logging
+
 
 def index(request):
     form = AdvertForm()

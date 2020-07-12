@@ -38,9 +38,6 @@ def get_page_source(url):
         return html
     except Exception as e:
         logger.error(e)
-        trace_back = traceback.format_exc()
-        message = str(e) + " " + str(trace_back)
-        print(message)
 
 
 def get_advert_list(parser, advert_page):
