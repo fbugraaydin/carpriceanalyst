@@ -14,7 +14,6 @@ def job():
         save(average_amount, link)
 
 
-def schedule_job():
-    scheduler = BackgroundScheduler(daemon=True)
-    scheduler.add_job(job, CronTrigger(hour=14, day='*', minute=40))
-    scheduler.start()
+scheduler = BackgroundScheduler(daemon=True)
+scheduler.add_job(job, CronTrigger(hour=14, day='*', minute=59))
+scheduler.start()
