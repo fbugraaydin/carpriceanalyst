@@ -14,6 +14,9 @@ def job():
         save(average_amount, link)
 
 
-scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(job, CronTrigger(hour=14, day='*', minute=59))
-scheduler.start()
+logger.info("Scheduler is being started by Heroku!")
+
+job()
+#scheduler = BackgroundScheduler(daemon=True)
+#scheduler.add_job(job, CronTrigger(hour=14, day='*', minute=59))
+#scheduler.start()
