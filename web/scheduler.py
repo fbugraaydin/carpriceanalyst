@@ -14,8 +14,9 @@ def job():
         save(average_amount, link)
 
 
-logger.info("Scheduler is being started by Heroku!")
-
-scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(job, CronTrigger(hour=14, day='*', minute=59))
-scheduler.start()
+def schedule_job():
+    logger.info("Scheduler is being started by Heroku!")
+    job()
+    # scheduler = BackgroundScheduler(daemon=True)
+    # scheduler.add_job(job, CronTrigger(hour=17, day='*', minute=20))
+    # scheduler.start()
