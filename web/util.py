@@ -1,5 +1,5 @@
 def extract_amount(amount):
-    return float(amount.split(" ")[0])
+    return float(str(amount.split(" ")[0]).replace('.', ''))
 
 
 def format_date(date):
