@@ -28,7 +28,7 @@ def index(request):
 
             average_amount_list, date_list = flat_values(input_link)
 
-            format_average_amount = "{:,.3f} TL".format(average_amount)
+            format_average_amount = "{:,.3f} ₺".format(average_amount)
             return JsonResponse({'average_amount': 'Average Price is {average_amount} '.format(
                 average_amount=format_average_amount),
                 'data': list(average_amount_list),
