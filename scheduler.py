@@ -1,7 +1,7 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
-from .db import get_all_link
-from .analyzer import analyze, save
+from web.db import get_all_link
+from web.analyzer import analyze, save
 import logging
 
 logger = logging.getLogger(__name__)
