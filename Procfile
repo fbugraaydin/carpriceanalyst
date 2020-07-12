@@ -1,2 +1,2 @@
 web: gunicorn carpriceanalyst.wsgi --log-file -
-clock: python scheduler.py
+clock: python manage.py web/scheduler.py
