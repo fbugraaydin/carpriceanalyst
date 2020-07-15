@@ -23,10 +23,18 @@ def calculate(total_adverts, total_amount):
 def analyze_page(input_link, input_page_choice):
     logger.info(
         'Link : {link}, page_choice: {page_choice}'.format(link=input_link, page_choice=input_page_choice))
-    parser = MyCarDotCom()
+    parser = get_parser(input_link)
+
     total_adverts = get_adverts_by_url(parser, input_link, input_page_choice)
     total_amount = calculate_total_amount(total_adverts)
     logger.info(
         'total_amount : {total_amount} , total_adverts : {total_adverts}'.format(total_amount=total_amount,
                                                                                  total_adverts=len(total_adverts)))
     return total_adverts, total_amount
+
+
+def get_parser(input_link):
+    if "sahibinden.com" in input_link:
+        return FromOwnerDotCom()
+    else:
+        return MyCarDotCom()

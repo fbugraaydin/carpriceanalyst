@@ -2,10 +2,10 @@
 {% load static %}
 {% block page_content %}
 
-    <div class="col-md-8 offset-md-2" style="margin-top:50px; margin-bottom: 50px;">
+    <div class="col-md-8 offset-md-2" style="margin-top:20px; margin-bottom: 20px;">
         <div class="card text-center">
             <div class="card-header" style="background: white">
-                <h1>Welcome Your Car Price Analyst</h1>
+                <h2>Welcome to Your Car Price Analyst</h2>
                 <div class="text-center">
                     <img src="https://www.autovisual.com/img/cote-8.png" class="rounded"
                          style="height: 140px;margin: 15px;">
@@ -30,10 +30,11 @@
                 <div class="tab-content" id="myTabContent" style="padding: 50px;">
                     <div class="tab-pane fade show active" id="analyze-car" role="tabpanel"
                          aria-labelledby="analyze-car-tab">
-                         <div id="warning-message" class="alert alert-warning" style="display: none" role="alert">
-                            <span>Please enter a valid criteria link.</span>
-                         </div>
-                        <h5 class="card-title">Please paste your car search link as your criteria and let me analyze for you!</h5>
+                        <div id="warning-message" class="alert alert-warning" style="display: none" role="alert">
+                            <span>Please enter a valid criteria link. You can enter a link from site fromownerdotcom or mycardotcom!</span>
+                        </div>
+                        <h5 class="card-title">Please paste your car search link as your criteria and let me analyze for
+                            you!</h5>
                         <form id="analyze-form" action="/execute/" method="post">
                             {% csrf_token %}
                             <div class="form-group">
@@ -71,21 +72,33 @@
                     <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab"
                          style="padding: 40px;">
                         <div class="">
-                          <div class="">
-                            <p>Car Price Analyst provides you the analysis of the car market according to your criteria.</p>
-                            <p>I developed project because I like and and follow cars.</p>
-                            <p>People says that The most powerful therapy of a man is that browsing on the car selling sites :)</p>
-                            <p>When you enter the Car Price Analyst. You have 2 functionality:</p>
-                            <p><span style="font-weight: bold">Analyze:</span> You enter car search link & select how many pages do you want to analyze.</p>
-                            <p><span style="font-weight: bold">History:</span> Lists search links that analyzed until now. When you select can see its history.</p>
-                            <p>Your criteria link that you analyzed runs on every morning. Thus, you can follow changes from past to present day by day.</p>
-                            <p>This project was developed as a hobby. It has no commercial purpose.</p>
-                            <p>Project supports MyCarDotCom.</p>
-                            <p>Example input:
-                                <a target="_blank" href="https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi">https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi</a>
-                            </p>
-                            I hope you will have the car that you dreamed :)
-                          </div>
+                            <div class="">
+                                <p>Car Price Analyst provides you the analysis of the car market according to your
+                                    criteria.</p>
+                                <p>I developed project because I like and and follow cars.</p>
+                                <p>People says that The most powerful therapy of a man is that browsing on the car
+                                    selling sites :)</p>
+                                <p>When you enter the Car Price Analyst from 2 web site(fromownerdotcom & mycardotcom).
+                                    You have 2 functionality:</p>
+                                <span style="font-weight: bold">Analyze:</span> You enter car search link & select
+                                    how many pages do you want to analyze.<br>
+                                <span style="font-weight: bold">History:</span> Lists search links that analyzed
+                                    until now. When you select can see its history.</br></br>
+                                <p>Your criteria link that you analyzed runs on every morning. Thus, you can follow
+                                    changes from past to present day by day.</p>
+                                <p>This project was developed as a hobby. It has no commercial purpose.</p>
+                                <p>Project supports <span style="font-style: italic; font-weight: 600;">FromOwnerDotCom</span> &
+                                    <span style="font-style: italic; font-weight: 600;">MyCarDotCom.</span></p>
+                                <p style="font-weight: bold; color:red">Example inputs</p>
+                                <div><a target="_blank"
+                                        href="https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi">https://www.arabam.com/ikinci-el/otomobil/volkswagen-golf-1-4-tsi</a>
+                                </div>
+                                <div><a target="_blank"
+                                        href="https://www.sahibinden.com/audi-a3-a3-sedan?a5_min=2014&a5_max=2015">https://www.sahibinden.com/audi-a3-a3-sedan?a5_min=2014&a5_max=2015</a>
+                                </div>
+                                <br>
+                                <span>I hope you will have the car that you dreamed :)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,7 +129,7 @@
 
     <script type="text/javascript">
 
-        var priceFormatter = function addCommas(nStr){
+        var priceFormatter = function addCommas(nStr) {
             nStr += '';
             x = nStr.split('.');
             x1 = x[0];
@@ -133,7 +146,7 @@
         loadingBar.hide();
         var createChart = function (chartId, data, labels) {
             if (data != null && labels != null) {
-                document.getElementById(chartId+"-container").innerHTML = '<canvas id="' +chartId + '"></canvas>';
+                document.getElementById(chartId + "-container").innerHTML = '<canvas id="' + chartId + '"></canvas>';
 
                 var ctx = document.getElementById(chartId);
                 var historyChart = new Chart(ctx, {
@@ -158,7 +171,7 @@
                         },
                         tooltips: {
                             callbacks: {
-                                label: function(tooltipItem, chart){
+                                label: function (tooltipItem, chart) {
                                     return priceFormatter(tooltipItem.yLabel);
                                 }
                             }
@@ -224,13 +237,13 @@
             bottom: 0;
             left: 0;
             background: #fff0;
-            z-index:0;
+            z-index: 0;
         }
 
         .loader {
             text-align: center;
-            margin-top:42%;
-            margin-left :0%;
+            margin-top: 42%;
+            margin-left: 0%;
         }
     </style>
 

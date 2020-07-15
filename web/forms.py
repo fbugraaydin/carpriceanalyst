@@ -11,7 +11,7 @@ class AdvertForm(forms.Form):
     link = forms.CharField(
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Your Car Search Link"
+            "placeholder": "Enter your link from site FromOwnerDotCom or MyCarDotCom"
         })
     )
     page_choice = forms.IntegerField(
