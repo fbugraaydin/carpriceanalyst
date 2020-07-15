@@ -18,6 +18,12 @@ logger.addHandler(logging.StreamHandler())
 def get_page_source(url):
     try:
         if crawler() == CrawlerType.REQUESTS:
+            payload = {}
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'
+            }
+            return requests.request("GET", url, headers=headers, data=payload).content
+        else:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
             chrome_options.add_argument("--headless")
@@ -35,12 +41,6 @@ def get_page_source(url):
             time.sleep(2)
             browser.quit()
             return html
-        else:
-            payload = {}
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'
-            }
-            return requests.request("GET", url, headers=headers, data=payload)
 
     except Exception as e:
         logger.error(e)
