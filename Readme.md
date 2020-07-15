@@ -15,7 +15,9 @@ Just click to look at: http://car-price-analyst.herokuapp.com/
 
 ## Features
 
-When you enter the Car Price Analyst. You have 2 functionality:
+Project supports FromOwnerDotCom & MyCarDotCom.
+
+When you enter the Car Price Analyst from 2 web site(fromownerdotcom & mycardotcom). You have 2 functionality:
 - Analyze: You enter car search link & select how many pages do you want to analyze.
 - History: Lists search links that analyzed until now. When you select can see its history.
 
