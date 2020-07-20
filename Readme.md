@@ -58,9 +58,11 @@ PEP 8 -- Style Guide for Python Code
 ## Screenshots
 
 - Analyze
+
 ![Analyze](screenshots/screen1.png?raw=true)
 <br/>
 - History
+
 ![History](screenshots/screen2.png?raw=true)
 
 
