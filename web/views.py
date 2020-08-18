@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .forms import AdvertForm
 from .util import *
 from django.http import JsonResponse
-
 from .analyzer import *
 
 
@@ -37,9 +36,13 @@ def index(request):
     return render(request, 'index.html', {"form": form, "url_list": url_list})
 
 
+def history_list(request):
+    url_list = Link.objects.values_list('link', flat=True)
+    return JsonResponse(list(url_list), status=200, content_type='application/json',safe=False)
+
+
 def flat_values(input_link):
     average_amount_list = Statistic.objects.filter(
         link__link=input_link).values_list('average_amount', flat=True)
     date_list = Statistic.objects.filter(link__link=input_link).values_list('date', flat=True)
     return average_amount_list, date_list
-

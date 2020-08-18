@@ -10,8 +10,9 @@ Just click to look at: http://car-price-analyst.herokuapp.com/
 - [Python](https://www.python.org/)
 - [Django](https://www.djangoproject.com/)
 - [Selenium](https://selenium-python.readthedocs.io/)
-- [BootStrap](https://getbootstrap.com/)
+- [Bootstrap](https://getbootstrap.com/)
 - [SQLite](https://www.sqlite.org/index.html)
+- [APScheduler](https://apscheduler.readthedocs.io/en/stable/)
 
 ## Features
 
@@ -23,11 +24,7 @@ When you enter the Car Price Analyst from 2 web site(fromownerdotcom & mycardotc
 
 Your criteria link that you analyzed runs on every morning. Thus, you can follow changes from past to present day by day.
 
-
 ## Prerequisites
-
-- Selenium is used to get web page source. **driver** folder includes drivers that used by selenium.
-There are chrome & firefox drivers for mac. You must download as your os.
 
 - Must install required libraries:
 
@@ -35,9 +32,39 @@ There are chrome & firefox drivers for mac. You must download as your os.
 pip install -r requirements.txt
 ```
 
+- Selenium & Requests are used to get web page source. Default is Requests. (util.py -> crawler()) <br/>
+If want to use selenium, you must download chrome or firefox driver as your os and move to **driver** folder.<br/>
+
+## Deployment
+
+Project deployed to heroku.(https://car-price-analyst.herokuapp.com/). You can follow steps : [Deploying Python and Django Apps on Heroku](https://devcenter.heroku.com/articles/deploying-python)
+
+When project deployed to heroku, scheduler worked just once. Because heroku doesn't trigger APScheduler in Django.<br/>
+When you want to define pure scheduler in heroku you must define clock in Procfile. You can read [Scheduled Jobs with APScheduler](https://devcenter.heroku.com/articles/clock-processes-python#apscheduler) <br/>
+
+But our scheduler belongs to Django and needs objects in project. <br/>
+Because of that it defined custom command (**schedule_analyzer**) to provide scheduling job by Heroku.<br/>
+
+**Heroku Scheduler** add-on added to heroku project and triggers custom command on every morning. Heroku scheduler job command:
+
+```bash
+$ python manage.py schedule_analyzer
+```
+
 ## Coding Standards
 
 PEP 8 -- Style Guide for Python Code
+
+## Screenshots
+
+- Analyze
+
+![Analyze](screenshots/screen1.png?raw=true)
+<br/>
+- History
+
+![History](screenshots/screen2.png?raw=true)
+
 
 ## Licence
 
