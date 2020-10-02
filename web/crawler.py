@@ -23,10 +23,11 @@ def get_page_source(url):
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'
             }
             response = requests.request("GET", url, headers=headers, data=payload)
+            content = response.content
             logger.info("Status Code => {status_code}".format(status_code=response.status_code))
             logger.info("Headers => {headers}".format(headers=response.headers))
-
-            return response.content
+            logger.info("Response Content => {content}".format(content=content))
+            return content
         else:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument("--headless")
