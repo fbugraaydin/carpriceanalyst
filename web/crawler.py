@@ -26,7 +26,6 @@ def get_page_source(url):
             content = response.content
             logger.info("Status Code => {status_code}".format(status_code=response.status_code))
             logger.info("Headers => {headers}".format(headers=response.headers))
-            logger.info("Response Content => {content}".format(content=content))
             return content
         else:
             chrome_options = webdriver.ChromeOptions()
