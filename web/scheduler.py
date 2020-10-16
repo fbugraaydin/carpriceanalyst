@@ -3,6 +3,7 @@ from apscheduler.triggers.cron import CronTrigger
 from .db import get_all_link
 from .analyzer import analyze, save
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +14,7 @@ def job():
         try:
             average_amount = analyze(link, 1)
             save(average_amount, link)
+            time.sleep(60)
         except Exception as e:
             logger.error(e)
 
