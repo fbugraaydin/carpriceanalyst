@@ -6,7 +6,7 @@ import logging
 
 def save(average_amount, input_link):
     link = get_link(input_link)
-    logging.info("Saving : {link}, averageAmount: {} ".format(link=link, average_amount=average_amount))
+    logging.info("Saving : {link}, averageAmount: {average_amount} ".format(link=link, average_amount=average_amount))
     save_or_update_statistic(average_amount, input_link, link)
 
 
