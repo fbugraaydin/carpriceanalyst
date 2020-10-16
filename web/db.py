@@ -1,15 +1,19 @@
 from .models import *
 from datetime import date
+import logging
 
 
 def save_or_update_statistic(average_amount, input_link, link):
     today = date.today()
     statistic = Statistic.objects.filter(date=today, link__link=input_link)
+    logging.info("Saving : {link}, averageAmount: {} ".format(link=link, average_amount=average_amount))
     if len(statistic) == 1:
         statistic.update(average_amount=average_amount)
     else:
         statistic = Statistic(date=today, link=link, average_amount=average_amount)
-        statistic.save()
+        result = statistic.save()
+        logging.info("Saving result: {result}".format(result=result))
+    logging.info("Saved : {link}, averageAmount: {} ".format(link=link, average_amount=average_amount))
 
 
 def get_link(input_link):
