@@ -6,13 +6,11 @@ import logging
 def save_or_update_statistic(average_amount, input_link, link):
     today = date.today()
     statistic = Statistic.objects.filter(date=today, link__link=input_link)
-    logging.info("Statistic size : {statistic}, Link : {link}".format(statistic=len(statistic),link=link))
     if len(statistic) == 1:
         statistic.update(average_amount=average_amount)
     else:
         statistic = Statistic(date=today, link=link, average_amount=average_amount)
-        result = statistic.save()
-        logging.info("Saving result: {result}".format(result=result))
+        statistic.save()
     logging.info("Saved : {link}, averageAmount: {average_amount} ".format(link=link, average_amount=average_amount))
 
 
