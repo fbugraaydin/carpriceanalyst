@@ -1,5 +1,6 @@
 from .models import *
 from datetime import date
+import logging
 
 
 def save_or_update_statistic(average_amount, input_link, link):
@@ -10,6 +11,7 @@ def save_or_update_statistic(average_amount, input_link, link):
     else:
         statistic = Statistic(date=today, link=link, average_amount=average_amount)
         statistic.save()
+    logging.info("Saved : {link}, averageAmount: {average_amount} ".format(link=link, average_amount=average_amount))
 
 
 def get_link(input_link):

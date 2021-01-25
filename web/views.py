@@ -43,6 +43,6 @@ def history_list(request):
 
 def flat_values(input_link):
     average_amount_list = Statistic.objects.filter(
-        link__link=input_link).values_list('average_amount', flat=True)
-    date_list = Statistic.objects.filter(link__link=input_link).values_list('date', flat=True)
+        link__link=input_link).order_by('date').values_list('average_amount', flat=True)
+    date_list = Statistic.objects.filter(link__link=input_link).order_by('date').values_list('date', flat=True)
     return average_amount_list, date_list

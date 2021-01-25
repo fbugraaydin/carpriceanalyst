@@ -2,10 +2,11 @@ from .crawler import get_adverts_by_url, calculate_total_amount
 from .fromownerdotcom import *
 from .mycardotcom import *
 from .db import *
-
+import logging
 
 def save(average_amount, input_link):
     link = get_link(input_link)
+    logging.info("Saving : {link}, averageAmount: {average_amount} ".format(link=link, average_amount=average_amount))
     save_or_update_statistic(average_amount, input_link, link)
 
 

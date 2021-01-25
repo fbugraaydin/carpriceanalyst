@@ -1,6 +1,7 @@
 #### Heroku Commands
 
 heroku run python manage.py shell
+
 heroku logs --app=$app_name -t
 
 #### Learn server ip
