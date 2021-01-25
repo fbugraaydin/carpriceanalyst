@@ -9,8 +9,11 @@ heroku logs --app=$app_name -t
 import http.client
 
 connection = http.client.HTTPSConnection("httpbin.org")
+
 connection.request("GET", "/ip")
+
 response = connection.getresponse()
+
 print("Status: {} and response: {}".format(response.status, response.read().decode()))
 
 connection.close()
