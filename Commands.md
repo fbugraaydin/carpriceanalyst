@@ -1,8 +1,16 @@
 #### Heroku Commands
 
-heroku run python manage.py shell
+heroku run --app=<app-name> python manage.py shell
 
 heroku logs --app=$app_name -t
+
+#### Django Db Operations
+
+from web.models import *
+
+Link.objects.order_by('id').values()
+
+Link.objects.filter(id=83).delete()
 
 #### Learn server ip
 
